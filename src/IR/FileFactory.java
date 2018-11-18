@@ -13,6 +13,11 @@ public class FileFactory {
 	}
 	
 	private static String[] parseHTML(String path) {
+	
+	}
+	
+	public static ArrayList<String> traverseFolderStructure(String startFolder){
 		
+		return new ArrayList<String>;
 	}
 }
