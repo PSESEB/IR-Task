@@ -8,7 +8,7 @@ public class FileFactory {
 		return new Doc("name","content",path);
 	}
 	
-	private static String[] parseText(String path) {
+    private static String[] parseText(String path) {
 		
 	}
 	
