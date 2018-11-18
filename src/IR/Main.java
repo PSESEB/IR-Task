@@ -1,5 +1,13 @@
 package IR;
 
+import java.util.ArrayList;
+
+/**
+ * Main Method with Params
+ * 
+ * @author weenzeal
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -23,7 +31,10 @@ public class Main {
 		}
 		String query = args[3];
 		
-		
+		ArrayList<Doc> documents = new ArrayList<Doc>();
+	    for(String file : FileFactory.traverseFolderStructure(pathDocs)) {
+	    	documents.add(FileFactory.getInstance(file));
+	    }
 
 	}
 

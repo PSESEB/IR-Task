@@ -1,5 +1,11 @@
 package IR;
 
+/**
+ * Document Class
+ * Used to feed to Lucene
+ * @author weenzeal
+ *
+ */
 public class Doc {
 	
 	private String title;
