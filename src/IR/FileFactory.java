@@ -30,16 +30,13 @@ public class FileFactory {
 		return new Doc(parsed[0],parsed[1],path);
 	}
 	
-<<<<<<< HEAD
+
 	/**
 	 * Extracts content + name from txt file
 	 * @param path Parse Text
 	 * @return name + content in Array
 	 */
 	private static String[] parseText(String path) {
-=======
-    private static String[] parseText(String path) {
->>>>>>> refs/remotes/origin/michael
 		
 		return new String[2];
 	}
