@@ -35,6 +35,11 @@ public class Main {
 	    for(String file : FileFactory.traverseFolderStructure(pathDocs)) {
 	    	documents.add(FileFactory.getInstance(file));
 	    }
+	    Doc doc1 = documents.get(0);
+	    Doc doc2 = documents.get(1);
+	    System.out.println(doc1.getTitle() + "   " + doc2.getTitle());
+	    System.out.println(doc1.getContent() + "  " + doc2.getContent());
+	    
 
 	}
 
