@@ -2,11 +2,8 @@ package IR;
 import java.io.*;
 import java.util.ArrayList;
 
-import org.jsoup.nodes.Element;
 import org.jsoup.Jsoup;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.jsoup.nodes.Document;
 /**
@@ -20,7 +17,6 @@ public class FileFactory {
 	 * Typical Factory Method to parse Files to Doc Instances
 	 * @param path Path to document that should be parsed
 	 * @return Doc Instance of parsed Document
-	 * @throws IOException 
 	 */
 	public static Doc getInstance(String path){
 		
@@ -41,27 +37,39 @@ public class FileFactory {
 	 * Extracts content + name from txt file
 	 * @param path Parse Text
 	 * @return name + content in Array
-	 * @throws IOException 
+	 *
 	 */
 	private static String[] parseText(String path){
 		
+		File f = new File(path);
+		String name = f.getName().replaceFirst("[.][^.]+$", "");
+		BufferedReader br;
+		String[] text = new String[2];
 		try {
-		File file = new File(path);
-		String name = file.getName();
-		BufferedReader br = new BufferedReader(new FileReader(file)); 
-		String st;
-		String content="";
-		while ((st = br.readLine()) != null) 
-			content+=br.readLine();
-		br.close();
-		String[] text = {name,content};
+			br = new BufferedReader(new FileReader(path));
+		
+		
+		    StringBuilder sb = new StringBuilder();
+		    String line = br.readLine();
+
+		    while (line != null) {
+		        sb.append(line);
+		        sb.append(System.lineSeparator());
+		        line = br.readLine();
+		    }
+		    String content = sb.toString();
+		    
+		    text[0] = name;
+		    text[1] = content;
+		    br.close();
+			
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return text;
-		}
-		catch(Exception e){
-		e.printStackTrace();	
-		}
-		return new String[2];
 	}
 	
 	/**
@@ -72,7 +80,7 @@ public class FileFactory {
 	 */
 	private static String[] parseHTML(String path)  {
 		File file = new File(path);
-		  
+		String[] html = new String[2];
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(file));
@@ -80,22 +88,25 @@ public class FileFactory {
 		
 		String st;
 		String content="";
-		while ((st = br.readLine()) != null) 
-			content+=br.readLine();
+		while ((st = br.readLine()) != null) {
+			
+			content+=st;
+		}
 		Document doc = Jsoup.parse(content);
 		
 		String title = doc.title();
-        if(title==null) {
-        	title = file.getName();
+        if(title.equals("")) {
+        	title = file.getName().replaceFirst("[.][^.]+$", "");
         }
 		String body = doc.body().text();
-		String[] html = {title,body};
-		return html;
+		html[0] = title;
+		html[1] = body;
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
 		}
-		return new String[2];
+		return html;
 		
 	}
 	
