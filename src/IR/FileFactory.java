@@ -1,10 +1,12 @@
 package IR;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
+
 import org.jsoup.Jsoup;
-
-
 import org.jsoup.nodes.Document;
 /**
  * Factory Class to parse Files and explore Folder structure
@@ -13,6 +15,40 @@ import org.jsoup.nodes.Document;
  */
 public class FileFactory {
 
+	
+	/**
+	 * Checks if file is txt file
+	 * @param file
+	 * @return true if txt else false
+	 */
+	private static boolean isTextFile(String file) {
+		file = file.toLowerCase();
+		if(file.lastIndexOf('.') > 0 && file.substring(file.lastIndexOf('.')+1).equals("txt")) {
+			return true;
+		}
+		return false;
+			
+	}
+	
+	/**
+	 * Checks if file is html file
+	 * @param file
+	 * @return true if html else false
+	 */
+	private static boolean isHTMLFile(String file) {
+		file = file.toLowerCase();
+		if(file.lastIndexOf('.') > 0) {
+		String extension = file.substring(file.lastIndexOf('.')+1);
+		if(extension.equals("html") || extension.equals("htm")) {
+			return true;
+		}
+		}
+		
+		
+
+		return false;
+		
+	}
 	/**
 	 * Typical Factory Method to parse Files to Doc Instances
 	 * @param path Path to document that should be parsed
@@ -20,13 +56,14 @@ public class FileFactory {
 	 */
 	public static Doc getInstance(String path){
 		
+		System.out.println("Parsing File: "+path);
 		String[] parsed = new String[2];
 		if(isTextFile(path)) {
 			parsed = parseText(path);
 		}else if(isHTMLFile(path)){
 			parsed = parseHTML(path);
 		}else {
-			System.out.println("Something is wrong with the Traversal Method! Non txt or html files Found!");
+			System.out.println("Something is wrong with the Traversal Method! No txt or html files Found!");
 			System.exit(1);
 		}
 		
@@ -136,37 +173,4 @@ public class FileFactory {
 		return fileList;
 	}
 	
-	/**
-	 * Checks if file is txt file
-	 * @param file
-	 * @return true if txt else false
-	 */
-	private static boolean isTextFile(String file) {
-		file = file.toLowerCase();
-		if(file.lastIndexOf('.') > 0 && file.substring(file.lastIndexOf('.')+1).equals("txt")) {
-			return true;
-		}
-		return false;
-			
-	}
-	
-	/**
-	 * Checks if file is html file
-	 * @param file
-	 * @return true if html else false
-	 */
-	private static boolean isHTMLFile(String file) {
-		file = file.toLowerCase();
-		if(file.lastIndexOf('.') > 0) {
-		String extension = file.substring(file.lastIndexOf('.')+1);
-		if(extension.equals("html") || extension.equals("htm")) {
-			return true;
-		}
-		}
-		
-		
-
-		return false;
-		
-	}
 }
