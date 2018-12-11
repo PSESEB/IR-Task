@@ -5,13 +5,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.FuzzyQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
@@ -74,20 +68,14 @@ public class Main {
 			}
 			//if it exists we just input the path to our searcher method
 			
-			 // IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(pathIndex)));
-			  
-			  //reader.getTermFreqVectors(arg0)
-			  //IndexSearcher searcher = new IndexSearcher(reader);
+			
 		      long startTime = System.currentTimeMillis();
 
-		      //create a term to search file name
-		     // Term term = new Term("title", userquery);
-		      //create the term query object
-		      //Query query = new FuzzyQuery(term);
+		    
 		      
 		      Searcher search = new Searcher(pathIndex);
 		      
-		      search.setSimilarity(modeVS ? new BM25Similarity() : new ClassicSimilarity());
+		      search.setSimilarity(modeVS ? new ClassicSimilarity() :  new BM25Similarity());
 		      
 		      
 		      TopDocs hits = search.search(userquery, max_search_terms);
@@ -109,7 +97,7 @@ public class Main {
 		         System.out.println();
 		        
 		      }
-		     
+		    
 			
 		
 			
