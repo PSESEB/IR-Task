@@ -28,8 +28,7 @@ public class Indexer {
       Directory indexDirectory = FSDirectory.open(Paths.get(indexDirectoryPath));
       //Builds an analyzer with the default stop words
       EnglishAnalyzer analyzer = new EnglishAnalyzer();
-      
-     
+      //we are using EnglishAnalyzer because it contains by default the PorterStemFilter
       
       
       IndexWriterConfig config = new IndexWriterConfig(analyzer);
@@ -37,11 +36,12 @@ public class Indexer {
       writer = new IndexWriter(indexDirectory, config);
    
    }
-
+   //function created for closing the index writer
    public void close() throws CorruptIndexException, IOException {
       writer.close();
    }
-
+   //function to include information and content of every file in the indexing
+   //and then return a document with all requested information	
    private Document getDocument(Doc datadoc) throws IOException {
       Document document = new Document();
 
@@ -62,13 +62,13 @@ public class Indexer {
 
       return document;
    }   
-
+   //function to add the documents in the writer
    private void indexFile(Doc datadoc) throws IOException {
-      System.out.println("Indexing "+datadoc.getPath()); //do we want info to be printed in the terminal?
-      Document document = getDocument(datadoc);
+      System.out.println("Indexing "+datadoc.getPath()); 
+      Document document = getDocument(datadoc); //get document function builds the appropriate file for the indexing
       writer.addDocument(document);
    }
-
+   //and now getting the documents as an arraz and using the function indexFile to create the index
    public int createIndex(ArrayList<Doc> docs) throws IOException {	   	   
 	   for (Doc d : docs) {		   
             indexFile(d);
