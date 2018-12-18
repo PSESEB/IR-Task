@@ -22,33 +22,37 @@ import org.apache.lucene.store.FSDirectory;
 
 
 public class Searcher {
-	
+	   //declaring globally the indexsearcher and the multifieldqueryparser
 	   IndexSearcher indexSearcher;
 	   MultiFieldQueryParser queryParser;
 	   
-
 	
 	   public Searcher(String indexDirectoryPath) throws IOException {
+	      //using the index directory path to create the index reader and the index searcher
 	      IndexReader indexDirectory = DirectoryReader.open(FSDirectory.open(Paths.get(indexDirectoryPath)));
 	      this.indexSearcher = new IndexSearcher(indexDirectory);
+	      // in order to look for both the title and the content in our search results we use the multifield query parser
 	      this.queryParser = new MultiFieldQueryParser(new String[] {"content", "title"},new EnglishAnalyzer());
 	   }
 
 	   public TopDocs search( String searchQuery, int max_terms) throws IOException, org.apache.lucene.queryparser.classic.ParseException {
-	    
-		Query query = this.queryParser.parse(searchQuery);
+	      //this topdocs function will return the most relevant documents filter by the maximun number of terms
+	      Query query = this.queryParser.parse(searchQuery);
 	      return indexSearcher.search(query, max_terms);
 	   }
 	   
 	   public TopDocs search(Query query,Sort sort,  int max_terms) throws IOException, ParserException {
-			return this.indexSearcher.search(query, max_terms,sort);
+		   //this topdocs function will return the most relevant documents filter by the maximun number of terms and the sorting method
+		   return this.indexSearcher.search(query, max_terms,sort);
 	   }
 	   
 	   public void setSimilarity(Similarity sim) {
+		   //similarity needed to be set for making use of the ranking model in our main method
 		   this.indexSearcher.setSimilarity(sim);
 	   }
 
 	   public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
+		   //accessing the private method doc of indexsearcher for returning the most relevant document based on score
 	      return indexSearcher.doc(scoreDoc.doc);	
 	   }
 
