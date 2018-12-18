@@ -113,7 +113,6 @@ public class FileFactory {
 	 * Extracts content + title form HTML file
 	 * @param path Parse HTML
 	 * @return title + content in Array
-	 * @throws IOException 
 	 */
 	private static String[] parseHTML(String path)  {
 		File file = new File(path);
